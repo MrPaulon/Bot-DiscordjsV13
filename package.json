@@ -1,0 +1,14 @@
+{
+  "name": "bot-hebergall",
+  "version": "1.0.0",
+  "description": "Bot discord HebergAll",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "MrPaulon",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.3.1"
+  }
+}
