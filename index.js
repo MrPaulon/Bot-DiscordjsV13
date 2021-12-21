@@ -44,7 +44,7 @@ client.on('messageCreate', async message => {
 			.addComponents(
 				new MessageSelectMenu()
 					.setCustomId('select')
-					.setPlaceholder('Sélectionner')
+					.setPlaceholder('Sélectionner une langue')
 					.addOptions([
 						{
 							label: '🥖 | Français',
@@ -124,7 +124,8 @@ client.on('guildMemberAdd', guildMember => {
   .addField('Nous sommes désormais', `${guildMember.guild.memberCount} Membres`, true)
 	.setTimestamp()
 	.setFooter('HebergAll', 'https://cdn.discordapp.com/attachments/886347025887682590/915316202841178112/heberg4.png');
-  guildMember.guild.channels.cache.get('915423879739093044').send({ embeds: [WelcomeEmbed] });
+  guildMember.guild.channels.cache.get(welcomeChannel).send({ embeds: [WelcomeEmbed] });
+  guildMember.roles.add('915420392196309022');
 });
 
 /*Quit*/
