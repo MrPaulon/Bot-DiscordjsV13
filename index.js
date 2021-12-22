@@ -1,6 +1,6 @@
 const { Client, Intents, Constants, MessageEmbed, MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
 const { clientId, guildId, token, welcomeChannel } = require('./auth.json');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 
 client.on('ready', () => {
   console.log('Le bot est en ligne')
