@@ -69,7 +69,7 @@ client.on('messageCreate', async message => {
   if (message.content === "ha!ticket"){
     const SelectContryEmbed = new MessageEmbed()
       .setColor('#f33030')
-      .setTitle('🔖 Tickets !')
+      .setTitle('📩 Tickets !')
       .setDescription("Les tickets ont seulement pour but de contacter la modération, si vous avez une question concernant le discord, une demande particulière où un soucis vous pouvez l'utiliser.Veuillez à suivre les instructions demandées une fois le ticket ouvert. Il est parfois possible que personne ne soit là pour répondre directement.")
       .setThumbnail('https://cdn.discordapp.com/attachments/886347025887682590/915316202438557736/Heberg2.png')
       .setTimestamp()
@@ -78,7 +78,7 @@ client.on('messageCreate', async message => {
 			.addComponents(
 				new MessageButton()
 					.setCustomId('TicketsOuvrir')
-					.setLabel('Ouvrir un ticket')
+					.setLabel('🔖 Ouvrir un ticket')
 					.setStyle('SUCCESS'),
 			);
     message.channel.send({ embeds: [SelectContryEmbed], components: [TicketsButton] })}
@@ -129,15 +129,17 @@ client.on('interactionCreate', interaction => {
   }
 });
 
+
+/* 🔖 Tickets */
 client.on('interactionCreate', interaction => {
   if(!interaction.isButton()) return;
-  console.log(interaction)
-  if (interaction.values[0] == 'TicketsOuvrir'){
-    message.guild.channels.create(`🔓-𝘛𝘪𝘤𝘬𝘦𝘵-${message.author.username}`, {
+  if (interaction.customId == 'TicketsOuvrir'){
+    interaction.reply({ content: 'Vous avez choisit d\'ouvrir un ticket, le staff serra bientôt à votre écoute !', ephemeral: true});
+    interaction.guild.channels.create(`🔓-𝘛𝘪𝘤𝘬𝘦𝘵-${interaction.user.username}`, {
       parent: '916326736029966357',
-      topic: `Ticket ouvert par ${message.author.username} (id de ${message.author.username}: ${message.author.id})`,
+      topic: `Ticket ouvert par ${interaction.user.username} (id de ${interaction.user.username}: ${interaction.user.id})`,
       permissionOverwrites: [{
-          id: message.author.id,
+          id: interaction.user.id,
           allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         },
         {
@@ -145,7 +147,7 @@ client.on('interactionCreate', interaction => {
           allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
         },
         {
-          id: message.guild.roles.everyone,
+          id: interaction.guild.roles.everyone,
           deny: ['VIEW_CHANNEL'],
         },
       ],
@@ -154,7 +156,7 @@ client.on('interactionCreate', interaction => {
   }
 })
 
-/*Join*/
+/* 🛬 Join */
 client.on('guildMemberAdd', guildMember => {
   const WelcomeEmbed = new MessageEmbed()
 	.setColor('#f33030')
@@ -169,7 +171,7 @@ client.on('guildMemberAdd', guildMember => {
   guildMember.roles.add('915420392196309022');
 });
 
-/*Quit*/
+/* 🛫 Quit */
 client.on('guildMemberRemove', guildMember => {
   const QuitEmbed = new MessageEmbed()
 	.setColor('#f33030')
@@ -182,5 +184,22 @@ client.on('guildMemberRemove', guildMember => {
 	.setFooter('HebergAll', 'https://cdn.discordapp.com/attachments/886347025887682590/915316202841178112/heberg4.png');
   guildMember.guild.channels.cache.get('922942360944517140').send({ embeds: [QuitEmbed] });
 });
+
+
+/* Statut du bot intervalle fixé à 30s */
+client.on('ready', () => {
+  var state = 0;
+  const presences = [
+      { type: 'PLAYING',  message: 'hebergall.fr'  },
+      { type: 'WATCHING', message: `les ${client.guilds.cache.get(guildId).memberCount} membres` }
+  ];
+
+  setInterval(() => {
+      state = (state + 1) % presences.length;
+      var presence = presences[state];
+
+      client.user.setActivity(presence.message, { type: presence.type });
+  }, 30000);
+})
 
 client.login(token)
