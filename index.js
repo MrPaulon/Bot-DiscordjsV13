@@ -1,4 +1,4 @@
-const { Client, Intents, Constants, MessageEmbed, MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { Client, Intents, Constants, MessageEmbed, MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
 const { clientId, guildId, token, welcomeChannel } = require('./auth.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 
@@ -66,6 +66,22 @@ client.on('messageCreate', async message => {
       message.channel.send({ embeds: [SelectContryEmbed], components: [ChannelSelectLanguage] }) 
     }
   }
+  if (message.content === "ha!ticket"){
+    const SelectContryEmbed = new MessageEmbed()
+      .setColor('#f33030')
+      .setTitle('🔖 Tickets !')
+      .setDescription("Les tickets ont seulement pour but de contacter la modération, si vous avez une question concernant le discord, une demande particulière où un soucis vous pouvez l'utiliser.Veuillez à suivre les instructions demandées une fois le ticket ouvert. Il est parfois possible que personne ne soit là pour répondre directement.")
+      .setThumbnail('https://cdn.discordapp.com/attachments/886347025887682590/915316202438557736/Heberg2.png')
+      .setTimestamp()
+      .setFooter('HebergAll', 'https://cdn.discordapp.com/attachments/886347025887682590/915316202841178112/heberg4.png');
+      const TicketsButton = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setCustomId('TicketsOuvrir')
+					.setLabel('Ouvrir un ticket')
+					.setStyle('SUCCESS'),
+			);
+    message.channel.send({ embeds: [SelectContryEmbed], components: [TicketsButton] })}
 });
 
 client.on('interactionCreate', async (interaction) => {
@@ -112,6 +128,31 @@ client.on('interactionCreate', interaction => {
     interaction.member.roles.add('918110715280248833')
   }
 });
+
+client.on('interactionCreate', interaction => {
+  if(!interaction.isButton()) return;
+  console.log(interaction)
+  if (interaction.values[0] == 'TicketsOuvrir'){
+    message.guild.channels.create(`🔓-𝘛𝘪𝘤𝘬𝘦𝘵-${message.author.username}`, {
+      parent: '916326736029966357',
+      topic: `Ticket ouvert par ${message.author.username} (id de ${message.author.username}: ${message.author.id})`,
+      permissionOverwrites: [{
+          id: message.author.id,
+          allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
+        },
+        {
+          id: '918113015650480188',
+          allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
+        },
+        {
+          id: message.guild.roles.everyone,
+          deny: ['VIEW_CHANNEL'],
+        },
+      ],
+      type: 'text',
+    })
+  }
+})
 
 /*Join*/
 client.on('guildMemberAdd', guildMember => {
