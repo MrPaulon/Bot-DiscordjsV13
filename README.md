@@ -1,6 +1,6 @@
-## The Bot
+## Bot discord
 
-The BOT est un bot discord. Avec The BOT vous avez désormais une liberté total, et une multitude de choix pour gérer la modération de votre discord comme vous l'entendez, créer des événements pour votre commnauté, organiser un giveway, faire un Blins-Test ou encore plus simplement écouter de la musique ? 
+Avec cette template vous avez désormais une liberté total, et une multitude de choix pour gérer la modération de votre discord comme vous l'entendez, créer des événements pour votre commnauté, organiser un giveway, faire un Blins-Test ou encore plus simplement écouter de la musique ? 
 
 Alors convaincu ? The BOT n'attends plus que vous alors [cliquez ici](https://discord.com/api/oauth2/authorize?client_id=895276437911773215&permissions=8&scope=bot)
 
